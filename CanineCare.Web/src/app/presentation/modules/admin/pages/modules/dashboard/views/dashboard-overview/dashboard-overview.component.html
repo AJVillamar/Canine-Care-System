@@ -1,0 +1,82 @@
+<section class="container-fluid w-100 h-100 p-0">
+    <div class="panel__header">
+        <p class="panel__header--title">Calendario de Citas</p>
+    </div>
+    <section class="panel__body p-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="button">
+                <button 
+                    class="button__control button__control--black px-4"
+                    type="submit"
+                    matTooltip="Semana Anterior"
+                    matTooltipPosition="above"
+                    (click)="goToPreviousWeek()">
+                    <i class="fa-solid fa-angle-left"></i>
+                </button>
+            </div>
+            <div class="d-flex gap-3">
+                <div class="button">
+                    <button 
+                        class="button__control button__control--black px-4"
+                        type="submit"
+                        matTooltip="Semana Actual"
+                        matTooltipPosition="left"
+                        (click)="goToCurrentWeek()">
+                        <i class="fa-solid fa-calendar-day"></i>
+                    </button>
+                </div>
+                <div class="button">
+                    <button 
+                        class="button__control button__control--black px-4"
+                        type="submit"
+                        matTooltip="Semana Siguiente"
+                        matTooltipPosition="above"
+                        (click)="goToNextWeek()">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <main>
+            <div class="table-responsive mt-4">
+                <table class="table table-hover table-sm table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            @for (date of weekDates; track $index) {
+                                <th class="th__custom">{{ date | date: 'EEEE dd/MM/yyyy' : '' : 'es-EC' }}</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (hour of hours; track hour) {
+                            <tr>
+                                <td class="th__custom">{{ hour.time?.slice(0, 5) }}</td>
+                                @for (date of weekDates; track $index) {
+                                    <td class="td__fixed">
+                                        @let appointment = getAppointmentByDateAndTime(date, hour.time!);
+                                        @if (appointment) {
+                                            <div class="container__detail">
+                                                <p class="detail__service">{{ appointment.service?.name }}</p>
+                                                <hr class="hr">
+                                                <div class="appointment">
+                                                    <span class="appointment__pet-name">{{ appointment.pet?.name }}</span>
+                                                    <button     
+                                                        class="appointment__button"
+                                                        matTooltip="Detalles"
+                                                        (click)="openDetail(appointment.id!)">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        }
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </section>
+</section>

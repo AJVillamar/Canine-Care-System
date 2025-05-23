@@ -54,22 +54,26 @@ namespace Infrastructure.Data.Repositories.People
             }
         }
 
+        public async Task<Professional?> GetByIdAsync(Guid id)
+        {
+            return await _context.Professionals
+                .Include(p => p.Person)
+                .Where(p => (p.PersonId == id || p.Id == id) && p.IsActive)
+                .Select(p => _professionalMapper.ToDomain(p))
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<Professional>> GetAllAsync()
         {
             return await _context.Professionals
-                .Include(t => t.Person)
-                .Where(t => t.IsActive)
-                .OrderBy(o => o.Person.LastName)
-                .Select(t => _professionalMapper.ToDomain(t))
+                .Include(p => p.Person)
+                .Where(p => p.IsActive)
+                .OrderBy(p => p.Person.LastName)
+                .Select(p => _professionalMapper.ToDomain(p))
                 .ToListAsync();
         }
 
         public Task AddRangeAsync(IEnumerable<Professional> entities)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Professional?> GetByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }

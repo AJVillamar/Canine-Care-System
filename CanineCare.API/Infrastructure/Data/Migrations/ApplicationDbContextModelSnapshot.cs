@@ -65,6 +65,9 @@ namespace Infrastructure.Data.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<int>("LoginAttempts")
+                        .HasColumnType("int");
+
                     b.Property<string>("Password")
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
@@ -227,6 +230,57 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("professional");
                 });
 
+            modelBuilder.Entity("Infrastructure.Data.Entities.Pet.AppointmentEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("PetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProfessionalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("Text");
+
+                    b.Property<Guid>("ServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeOnly>("Time")
+                        .HasColumnType("time");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PetId");
+
+                    b.HasIndex("ProfessionalId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("appoinment");
+                });
+
             modelBuilder.Entity("Infrastructure.Data.Entities.Pet.BreedEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -359,6 +413,79 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("pet-extrainfo");
                 });
 
+            modelBuilder.Entity("Infrastructure.Data.Entities.Pet.ServiceDetailEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ActionDescription")
+                        .IsRequired()
+                        .HasColumnType("Text");
+
+                    b.Property<string>("ActionName")
+                        .IsRequired()
+                        .HasColumnType("Text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("service-detail");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.Entities.Pet.ServiceEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("Text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("services");
+                });
+
             modelBuilder.Entity("PersonEntityRoleEntity", b =>
                 {
                     b.Property<Guid>("PersonsId")
@@ -418,6 +545,33 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("Person");
                 });
 
+            modelBuilder.Entity("Infrastructure.Data.Entities.Pet.AppointmentEntity", b =>
+                {
+                    b.HasOne("Infrastructure.Data.Entities.Pet.PetEntity", "Pet")
+                        .WithMany()
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Infrastructure.Data.Entities.People.ProfessionalEntity", "Professional")
+                        .WithMany()
+                        .HasForeignKey("ProfessionalId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Infrastructure.Data.Entities.Pet.ServiceEntity", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Pet");
+
+                    b.Navigation("Professional");
+
+                    b.Navigation("Service");
+                });
+
             modelBuilder.Entity("Infrastructure.Data.Entities.Pet.PetEntity", b =>
                 {
                     b.HasOne("Infrastructure.Data.Entities.Pet.BreedEntity", "Breed")
@@ -448,6 +602,17 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("Pet");
                 });
 
+            modelBuilder.Entity("Infrastructure.Data.Entities.Pet.ServiceDetailEntity", b =>
+                {
+                    b.HasOne("Infrastructure.Data.Entities.Pet.ServiceEntity", "Service")
+                        .WithMany("ServiceDetails")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Service");
+                });
+
             modelBuilder.Entity("PersonEntityRoleEntity", b =>
                 {
                     b.HasOne("Infrastructure.Data.Entities.People.PersonEntity", null)
@@ -471,6 +636,11 @@ namespace Infrastructure.Data.Migrations
             modelBuilder.Entity("Infrastructure.Data.Entities.Pet.PetEntity", b =>
                 {
                     b.Navigation("PetExtraInfo");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.Entities.Pet.ServiceEntity", b =>
+                {
+                    b.Navigation("ServiceDetails");
                 });
 #pragma warning restore 612, 618
         }

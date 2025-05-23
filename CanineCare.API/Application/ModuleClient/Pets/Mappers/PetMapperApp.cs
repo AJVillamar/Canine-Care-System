@@ -1,6 +1,6 @@
 ﻿using Domain.ModuleClient.Pets.Enums;
+using Domain.ModuleClient.Pets.Models;
 using Domain.ModuleClient.Pets.Builders;
-using Domain.ModuleClient.Canines.Models;
 using Application.ModuleClient.Pets.Dtos;
 using Application.ModuleClient.Breeds.Mappers;
 using Application.ModuleClient.Owners.Mappers;
@@ -24,6 +24,14 @@ namespace Application.ModuleClient.Pets.Mappers
             _breedMapper = breedMapper;
             _ownerMapper = ownerMapper;
         }
+
+        public Pet ToDomain(Guid id)
+        {
+            return new PetBuilder()
+                .WithId(id)
+                .BuildMinimal();
+        }
+
 
         public Pet ToDomain(CreatePetCommand command)
         {
@@ -76,6 +84,16 @@ namespace Application.ModuleClient.Pets.Mappers
                 Weight = domain.Weight.Value,
                 PetExtraInfo = _extraInfoMapper.ToDto(domain.ExtraInfo),
                 Owner = _ownerMapper.ToDto(domain.Owner)
+            };
+        }
+
+        public PetDto ToDto(Guid id, string name, Guid ownerId)
+        {
+            return new PetDto
+            {
+                Id = id,
+                Name = name,
+                Owner = _ownerMapper.ToDto(ownerId)
             };
         }
     }

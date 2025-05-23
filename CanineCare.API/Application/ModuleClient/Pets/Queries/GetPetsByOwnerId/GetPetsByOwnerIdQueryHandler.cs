@@ -2,18 +2,18 @@
 using Shared.Responses;
 using Application.ModuleClient.Pets.Dtos;
 using Application.ModuleClient.Pets.Mappers;
-using Domain.ModuleClient.Pets.Repositories;
 using Application.ModuleClient.Owners.Validators;
+using Domain.ModuleClient.Pets.Repositories;
 
 namespace Application.ModuleClient.Pets.Queries.GetPetsByOwnerId
 {
-    public class GetPetsByOwnerIdQueryHandler : IRequestHandler<GetPetsByOwnerIdQuery, ApiResult<List<PetDto>>>
+    public class GetPetsByOwnerIdentificationQueryHandler : IRequestHandler<GetPetsByOwnerIdQuery, ApiResult<List<PetDto>>>
     {
         private readonly IPetRepository _repository;
         private readonly OwnerValidator _validator;
         private readonly PetMapperApp _mapper;
 
-        public GetPetsByOwnerIdQueryHandler(
+        public GetPetsByOwnerIdentificationQueryHandler(
             IPetRepository repository,
             OwnerValidator validator,
             PetMapperApp mapper)

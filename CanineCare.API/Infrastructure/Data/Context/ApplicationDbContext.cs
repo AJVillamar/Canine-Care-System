@@ -28,5 +28,34 @@ namespace Infrastructure.Data.Context
         public DbSet<PetEntity> Pets { get; set; }
 
         public DbSet<PetExtraInfoEntity> PetExtras { get; set; }
+
+        public DbSet<ServiceEntity> Services { get; set; }
+
+        public DbSet<ServiceDetailEntity> ServiceDetails { get; set; }
+
+        public DbSet<AppointmentEntity> Appointments { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<AppointmentEntity>()
+                .HasOne(a => a.Professional)
+                .WithMany()
+                .HasForeignKey(a => a.ProfessionalId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<AppointmentEntity>()
+                .HasOne(a => a.Pet)
+                .WithMany()
+                .HasForeignKey(a => a.PetId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<AppointmentEntity>()
+                .HasOne(a => a.Service)
+                .WithMany()
+                .HasForeignKey(a => a.ServiceId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
     }
 }

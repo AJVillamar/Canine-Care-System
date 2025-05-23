@@ -1,0 +1,195 @@
+<section class="container-fluid w-100 h-100 p-0">
+    <div class="panel__header">
+        <p class="panel__header--title">Crear Servicio</p>
+    </div>
+    <section class="panel__body">
+        <form [formGroup]="form" >
+            <section class="row m-0 row-cols-md-2 p-3 p-md-4">
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text" 
+                            placeholder="Nombre del servicio" 
+                            class="form__input"
+                            formControlName="name" 
+                            autocomplete="off" />
+                        <label class="form__label">Nombre:</label>
+                        <i class="form__icon fa-solid fa-signature"></i>
+                        <div class="form__alerts">
+                            @if (name.invalid && (name.dirty || name.touched)) {
+                                @if (name.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                } @else if (name.errors?.['maxlength']) {
+                                    <span class="form__alert">Excedió el máximo de caracteres</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group form__group--sm">
+                        <select 
+                            class="form__input" 
+                            formControlName="type"
+                            (change)="onSelectType($event)" >
+                            <option selected disabled value="">Seleccionar Tipo</option>
+                            @for (item of servicesType; track $index) {
+                                <option [value]="item">{{ item }}</option>
+                            }
+                        </select>
+                        <label class="form__label">Tipo de Servicio:</label>
+                        <i class="form__icon fa-solid fa-solid fa-tags"></i>
+                        <div class="form__alerts">
+                            @if (type.invalid && (type.dirty || type.touched)) {
+                                @if (type.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                        
+                <div class="form__container w-100">
+                    <div class="form__group form__group--area h-auto">
+                        <textarea
+                            class="form__input form__input--area"
+                            formControlName="description"
+                            placeholder="Descripción del servicio"
+                            autocomplete="off">
+                        </textarea>
+                        <label class="form__label">Descripción:</label>
+                        <i class="form__icon fa-solid fa-message"></i>
+                        <div class="form__alerts">
+                            @if (description.invalid && (description.dirty || description.touched)) {
+                                @if (description.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                } 
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </form>
+
+        <form [formGroup]="activityForm">
+            <section class="row m-0 row-cols-md-2 p-3 p-md-4 pt-0">
+
+                <div class="w-100 mb-5">
+                    <p class="panel__header--title text-black">Detalles</p>
+                    <hr>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text" 
+                            [placeholder]="'Ingrese ' + labels.name.toLowerCase()" 
+                            class="form__input"
+                            formControlName="activityName" 
+                            autocomplete="off" />
+                        <label class="form__label">{{ labels.name }}:</label>
+                        <i class="form__icon fa-solid fa-list-check"></i>
+                        <div class="form__alerts">
+                            @if (activityName.invalid && (activityName.dirty || activityName.touched)) {
+                                @if (activityName.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text" 
+                            [placeholder]="'Ingrese ' + labels.desc.toLowerCase()" 
+                            class="form__input"
+                            formControlName="activityDescription" 
+                            autocomplete="off" />
+                        <label class="form__label">{{ labels.desc }}:</label>
+                        <i class="form__icon fa-solid fa-file-lines"></i>
+                        <div class="form__alerts">
+                            @if (activityDescription.invalid && (activityDescription.dirty || activityDescription.touched)) {
+                                @if (activityDescription.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                } 
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div></div> 
+
+                <div class="d-flex justify-content-end">
+                    <div class="button button--sm">
+                        <button 
+                            class="button__control button__control--primary float-end"
+                            type="submit" 
+                            (click)="addDetail()" >
+                            <span class="button__text">Agregar</span>
+                        </button>
+                    </div>
+                </div>
+
+                @if (dataSource.data.length !== 0) {
+                    <main class="container__table my-5">
+                        <mat-table [dataSource]="dataSource">
+                            
+                            <ng-container matColumnDef="title">
+                                <mat-header-cell *matHeaderCellDef> 
+                                    <span class="container__table--title">Título</span>
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element">{{ element.title }}</mat-cell>
+                            </ng-container>
+    
+                            <ng-container matColumnDef="description">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <span class="container__table--title">Descripción</span>
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
+                            </ng-container>
+    
+                            <ng-container matColumnDef="actions">
+                                <mat-header-cell *matHeaderCellDef> 
+                                    <span class="container__table--title">Acción</span>
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element; let i = index">
+                                    <button 
+                                        class="button--action" 
+                                        type="button" 
+                                        matTooltip="Eliminar"
+                                        (click)="removeDetail(i)">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </mat-cell>
+                            </ng-container>
+    
+                            <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;" class="table__header"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                        </mat-table>
+                    </main>                
+                }
+
+            </section>
+        </form>
+    </section>
+
+    <div class="panel__footer">
+        <div class="button">
+            <button 
+                class="button__control button__control--black float-end"
+                type="submit" 
+                (click)="onSubmit()" >
+                @if (isSubmitting()) {
+                    <div class="spinner-border spinner-border-sm"></div>
+                } @else {
+                    <span class="button__text">Registrar</span>
+                }
+            </button>
+        </div>
+    </div>
+</section>

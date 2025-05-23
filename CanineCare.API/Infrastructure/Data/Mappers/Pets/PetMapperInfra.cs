@@ -1,7 +1,7 @@
 ﻿using Domain.ModuleClient.Pets.Enums;
+using Domain.ModuleClient.Pets.Models;
 using Infrastructure.Data.Entities.Pet;
 using Domain.ModuleClient.Pets.Builders;
-using Domain.ModuleClient.Canines.Models;
 using Infrastructure.Data.Mappers.People;
 
 namespace Infrastructure.Data.Mappers.Pets
@@ -20,6 +20,15 @@ namespace Infrastructure.Data.Mappers.Pets
             _breedMapper = breedMapper;
             _ownerMapper = ownerMapper;
             _extraInfoMapper = extraInfoMapper;
+        }
+
+        public Pet ToDomain(Guid id, string name, Guid ownerId)
+        {
+            return new PetBuilder()
+                .WithId(id)
+                .WithName(name)
+                .WithOwner(_ownerMapper.ToDomain(ownerId))
+                .BuildBasic();
         }
 
         public Pet ToDomain(PetEntity entity)
@@ -46,6 +55,7 @@ namespace Infrastructure.Data.Mappers.Pets
             entity.Color = domain.Color;
             entity.Weight = domain.Weight.Value;
             entity.PetExtraInfo = _extraInfoMapper.ToEntity(entity.PetExtraInfo, domain.ExtraInfo);
+            entity.UpdatedAt = DateTime.Now;
             return entity;
         }
 

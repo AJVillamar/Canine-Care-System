@@ -1,0 +1,73 @@
+<section class="container-fluid w-100 h-10 p-0">
+
+    <div class="panel__header panel__header--white d-flex justify-content-end justify-content-sm-between">
+        <p class="panel__header--title d-none d-sm-block">Listado Caninos</p>
+        <div class="form__field h-auto">
+            <div class="form__input-wrapper">
+                <i class="form__icon fa-solid fa-magnifying-glass"></i>
+                <input 
+                    type="text" 
+                    class="form__input" 
+                    placeholder="Buscar (nombres, raza, etc..)" 
+                    (keyup)="applyFilter($event)" 
+                    #input />
+            </div>
+        </div>
+    </div>
+
+    <section class="panel__body p-2 p-md-3">
+
+        @if (isLoading()) {
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        }
+
+        <main class="container__table">
+            <mat-table [dataSource]="dataSource" matSort>
+                
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> 
+                         <span class="container__table--title">Nombre</span>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="breed">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        <span class="container__table--title">Raza</span>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{ element.breed.name }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="client">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        <span class="container__table--title">Propietario</span>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{ element.owner.firstName }} {{ element.owner.lastName }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef> 
+                        <span class="container__table--title">Detalles</span>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <button 
+                            class="button--action" 
+                            type="button" 
+                            matTooltip="Canino"
+                            (click)="openDetailPet(element.id)">
+                            <i class="fa-solid fa-dog"></i>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;" class="table__header"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </main>
+        
+    </section>
+
+    <div class="panel__footer h-auto py-2">
+        <mat-paginator [pageSizeOptions]="[25]" [pageSizeOptions]="[25, 50, 75, 100]"></mat-paginator>
+    </div>
+</section>

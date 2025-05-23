@@ -1,0 +1,58 @@
+.container-fluid {
+    background-color: var(--color-primary);
+}
+
+.container-fluid::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.1;
+    background: radial-gradient(circle, var(--color-white) 15%, transparent 15%),
+        radial-gradient(circle, var(--color-white) 15%, transparent 15%) 6px -6px,
+        radial-gradient(circle, var(--color-white) 15%, transparent 15%) 6px -1px,
+        radial-gradient(circle, var(--color-white) 15%, transparent 15%) 10px 2px,
+        radial-gradient(circle, var(--color-white) 15%, transparent 15%) 14px 5px,
+        radial-gradient(circle, var(--color-white) 15%, transparent 15%) 18px 8px,
+        radial-gradient(circle, var(--color-white) 15%, transparent 15%) 18px 12px,
+        radial-gradient(circle, var(--color-white) 15%, transparent 15%) 23px 6px;
+    background-size: 50px 50px;
+}
+
+.container {
+    background: var(--color-white);
+    border: 1px solid var(--color-black);
+    max-height: 575px;
+}
+
+.login {
+    flex: 1;
+}
+
+.login__logo {
+    width: 190px;
+}
+
+.login__title {
+    font-size: 22px;
+    font-family: 'grovant-title', sans-serif;
+}
+
+.login__subtitle {
+    font-family: 'grovant-title', sans-serif;
+    font-size: 12px;
+    margin-bottom: 30px;
+}
+
+.hr {
+    width: 100%;
+    margin-top: 0;
+}
+
+.container__image  {
+    flex: 2;
+}
+
+.login__image {
+  border: 1px solid #99999944;
+}

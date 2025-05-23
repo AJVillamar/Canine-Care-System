@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Shared.Responses;
 using Application.ModuleClient.Pets.Mappers;
-using Domain.ModuleClient.Pets.Repositories;
 using Application.ModuleClient.Pets.Validators;
+using Domain.ModuleClient.Pets.Repositories;
 
 namespace Application.ModuleClient.Pets.Commands.UpdatePet
 {

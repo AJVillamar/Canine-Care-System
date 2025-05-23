@@ -1,0 +1,106 @@
+<section class="container-fluid w-100 h-100 p-0">
+    <div class="panel__header">
+        <p class="panel__header--title">Información Básica</p>
+    </div>
+    <button 
+        class="card__dismiss card__dismiss--white"         
+        (click)="onCancel()">×</button>
+    <section class="panel__body">
+        <form [formGroup]="form" >
+
+            <section class="row m-0 row-cols-2 p-3 p-md-4">
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text" 
+                            class="form__input" 
+                            formControlName="name"
+                            readonly />
+                        <label class="form__label">Nombre:</label>
+                        <i class="form__icon fa-solid fa-fingerprint"></i>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text" 
+                            class="form__input"
+                            formControlName="breed" 
+                            readonly />
+                        <label class="form__label">Raza:</label>
+                        <i class="form__icon fa-solid fa-dog"></i>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text"
+                            class="form__input"
+                            formControlName="birthDate" 
+                            readonly />
+                        <label class="form__label">Fecha Nacimiento:</label>
+                        <i class="form__icon fa-solid fa-calendar-day"></i>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text" 
+                            class="form__input"
+                            formControlName="sex" 
+                            readonly />
+                        <label class="form__label">Sexo:</label>
+                        <i class="form__icon fa-solid fa-venus-mars"></i>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group h-auto">
+                        <input 
+                            type="color" 
+                            class="form__input form__input--color pe-4" 
+                            formControlName="color" 
+                            readonly />
+                        <label class="form__label">Color de pelaje:</label>
+                        <i class="form__icon fa-solid fa-droplet"></i>
+                    </div>
+                </div>
+                
+                <div class="form__container">
+                    <div class="form__group h-auto">
+                        <input 
+                            type="text" 
+                            class="form__input"
+                            formControlName="weight" 
+                            readonly />
+                        <label class="form__label">Peso:</label>
+                        <i class="form__icon fa-solid fa-weight-scale"></i>
+                    </div>
+                </div>
+
+                <div class="button mt-4">
+                    <button 
+                        class="button__control button__control--primary"
+                        type="button" 
+                        (click)="openDetailOwner()" >
+                        <span class="button__text">Dueño</span>
+                    </button>
+                </div>
+
+                <div class="button mt-4">
+                    <button 
+                        class="button__control button__control--primary"
+                        type="button" 
+                        (click)="openDetailPetExtraInfo()" >
+                        <span class="button__text">Información Extra</span>
+                    </button>
+                </div>
+                
+            </section>
+        </form>
+    </section>
+</section>

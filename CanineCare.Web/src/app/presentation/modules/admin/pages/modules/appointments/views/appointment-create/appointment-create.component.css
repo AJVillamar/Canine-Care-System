@@ -1,0 +1,52 @@
+.panel__body--title, .select__pet--title {
+    width: 100%;
+    font-family: 'grovant-title', sans-serif;
+    font-size: small;
+    color: #333;
+    margin-bottom: 50px;
+}
+
+.select__pet--title {
+    font-size: 20px;
+    text-align: center;
+}
+
+.form__group--sm {
+    height: auto;
+}
+
+select {
+    appearance: none;
+}
+
+.button__control--search {
+    width: 40px;
+}
+
+.hr {
+    padding: 10px 35px;
+    margin: 15px 0;
+    margin-bottom: 25px;
+}
+
+.button {
+    min-width: 200px;
+}
+
+@media (max-width: 768px) {
+
+    .form__group--sm {
+        height: 70px;
+    }
+
+    .form__group--last {
+        height: 50px;
+    }
+
+    .hr {
+        padding: 10px 30px;
+        margin-top: 0;
+        padding-top: 0;
+    }
+
+}

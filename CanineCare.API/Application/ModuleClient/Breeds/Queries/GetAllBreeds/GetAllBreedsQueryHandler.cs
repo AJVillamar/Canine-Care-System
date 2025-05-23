@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Shared.Responses;
 using Application.ModuleClient.Breeds.Dtos;
-using Domain.ModuleClient.Pets.Repositories;
 using Application.ModuleClient.Breeds.Mappers;
+using Domain.ModuleClient.Pets.Repositories;
 
 namespace Application.ModuleClient.Breeds.Queries.GetAllBreeds
 {

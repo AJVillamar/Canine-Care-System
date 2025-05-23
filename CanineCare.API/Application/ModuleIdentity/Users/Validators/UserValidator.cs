@@ -20,5 +20,11 @@ namespace Application.ModuleIdentity.Users.Validators
             if (!string.IsNullOrWhiteSpace(email) && await _repository.GetByEmailAsync(email) != null)
                 throw new UniqueConstraintViolationException("Correo Electrónico");
         }
+
+        public async Task ValidateUpdateAsync(string? email = null)
+        {
+            if (string.IsNullOrWhiteSpace(email) && await _repository.GetByEmailAsync(email) != null)
+                throw new UniqueConstraintViolationException("Correo Electrónico");
+        }
     }
 }

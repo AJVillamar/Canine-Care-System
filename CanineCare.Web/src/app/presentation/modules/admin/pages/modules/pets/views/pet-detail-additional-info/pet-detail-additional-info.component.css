@@ -1,0 +1,11 @@
+.form__group--area {
+    height: 90px;
+}
+
+.form__input--area {
+    height: 50px;
+}
+
+textarea {
+    resize: none;
+}

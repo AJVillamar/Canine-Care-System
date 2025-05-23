@@ -1,0 +1,169 @@
+<section class="container-fluid w-100 h-100 p-0">
+    <div class="panel__header d-flex justify-content-end justify-content-sm-between">
+        <p class="panel__header--title">Actualizar Propietario</p>
+        <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="form__search">
+            <div class="form__container d-flex justify-content-center align-items-center">
+                <div class="form__group h-auto">
+                    <input 
+                        type="text" 
+                        placeholder="Buscas por número de cédula"
+                        class="form__input"
+                        formControlName="identification"
+                        autocomplete="off" />
+                </div>
+                <button 
+                    class="button__control button__control--black button__control--search"
+                    type="submit"
+                    (click)="onSearch()">
+                    @if (isSearchResult()) {
+                        <div class="spinner-border spinner-border-sm"></div>
+                    } @else {
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    }
+                </button>
+            </div>
+        </form>
+    </div>
+    <section class="panel__body">
+        
+        <form [formGroup]="editForm">
+
+            <section class="row row-cols-md-2 p-3 p-md-4 m-0">
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="email" 
+                            placeholder="Dirección de correo Electrónico"
+                            class="form__input"
+                            formControlName="email"
+                            autocomplete="off" />
+                        <label class="form__label">Correo Electrónico:</label>
+                        <i class="form__icon fa-solid fa-envelope"></i>
+                        <div class="form__alerts">
+                            @if (email.invalid && (email.dirty || email.touched)) {
+                                @if (email.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                } @else if(email.errors?.['invalidEmail']){
+                                    <span class="form__alert">Correo no válido</span>
+                                } @else if(email.errors?.['maxlength']) {
+                                    <span class="form__alert">Excedió el máximo de caracteres</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text" 
+                            placeholder="Ingrese sus nombres"
+                            class="form__input"
+                            formControlName="firstName"
+                            autocomplete="off"
+                            OnlyNames />
+                        <label class="form__label">Nombres:</label>
+                        <i class="form__icon fa-solid fa-signature"></i>
+                        <div class="form__alerts">
+                            @if (firstName.invalid && (firstName.dirty || firstName.touched)) {
+                                @if (firstName.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                } @else if (firstName.errors?.['maxlength']) {
+                                    <span class="form__alert">Excedió el máximo de caracteres</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text" 
+                            placeholder="Ingrese sus apellidos"
+                            class="form__input"
+                            formControlName="lastName"
+                            autocomplete="off" />
+                        <label class="form__label">Apellidos:</label>
+                        <i class="form__icon fa-solid fa-signature"></i>
+                        <div class="form__alerts">
+                            @if (lastName.invalid && (lastName.dirty || lastName.touched)) {
+                                @if (lastName.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                } @else if (lastName.errors?.['maxlength']) {
+                                    <span class="form__alert">Excedió el máximo de caracteres</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text"
+                            placeholder="Teléfono"
+                            class="form__input"
+                            formControlName="phone"
+                            autocomplete="off"
+                            PhoneNumberOnly />
+                        <label class="form__label">Teléfono:</label>
+                        <i class="form__icon fa-solid fa-phone"></i>
+                        <div class="form__alerts">
+                            @if (phone.invalid && (phone.dirty || phone.touched)) {
+                                @if (phone.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                }  @else if (phone.errors?.['invalidPhonePrefix']){
+                                    <span class="form__alert">Debe comenzar con 09</span>
+                                } @else if (phone.errors?.['invalidPhoneLength']){
+                                    <span class="form__alert">Debe tener 10 números</span>
+                                } @else if (phone.errors?.['maxlength']) {
+                                    <span class="form__alert">Excedió el máximo de caracteres</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form__container w-100">
+                    <div class="form__group">
+                        <input 
+                            type="text"
+                            placeholder="Dirección"
+                            class="form__input"
+                            formControlName="address"
+                            autocomplete="off" />
+                        <label class="form__label">Dirección:</label>
+                        <i class="form__icon fa-solid fa-location-pin"></i>
+                        <div class="form__alerts">
+                            @if (address.invalid && (address.dirty || address.touched)) {
+                                @if (address.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                } @else if (address.errors?.['maxlength']) {
+                                    <span class="form__alert">Excedió el máximo de caracteres</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </form>
+    </section>
+
+    <div class="panel__footer">
+        <div class="button">
+            <button 
+                class="button__control button__control--black float-end"
+                type="submit"
+                (click)="onSubmit()">
+                @if (isSubmittingEdit()) {
+                    <div class="spinner-border spinner-border-sm"></div>
+                } @else {
+                    <span class="button__text">Actualizar</span>
+                }
+            </button>
+        </div>
+    </div>
+</section>

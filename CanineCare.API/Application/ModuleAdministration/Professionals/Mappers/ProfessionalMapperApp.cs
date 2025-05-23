@@ -7,6 +7,13 @@ namespace Application.ModuleAdministration.Professionals.Mappers
 {
     public class ProfessionalMapperApp
     {
+        public Professional ToDomain(Guid id)
+        {
+            return new ProfessionalBuilder()
+                .WithId(id)
+                .BuildMinimal();
+        }
+
         public Professional ToDomain(CreateProfessionalCommand command)
         {
             return new ProfessionalBuilder()

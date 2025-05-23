@@ -1,0 +1,125 @@
+<section class="container-fluid w-100 h-100 p-0">
+    <div class="panel__header">
+        <p class="panel__header--title">Detalle Cita</p>
+    </div>
+    <button 
+        class="card__dismiss card__dismiss--white"         
+        (click)="onCancel()">×</button>
+    <section class="panel__body">
+        <form [formGroup]="form">
+
+            <section class="row m-0 row-cols-2 p-3 p-md-4">
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="email" 
+                            class="form__input"
+                            formControlName="pet"
+                            readonly />
+                        <label class="form__label">Canino:</label>
+                        <i 
+                            class="form__icon form__icon--button fa-solid fa-solid fa-shield-dog"
+                            matTooltip="Ver Detalles"
+                            (click)="openPetDetail()">
+                        </i>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="email" 
+                            class="form__input"
+                            formControlName="serviceType"
+                            readonly />
+                        <label class="form__label">Categoría:</label>
+                        <i class="form__icon fa-solid fa-tags"></i>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="email" 
+                            class="form__input"
+                            formControlName="serviceSelect"
+                            readonly />
+                        <label class="form__label">Servicio:</label>
+                        <i 
+                            class="form__icon form__icon--button fa-solid fa-clipboard-list"
+                            matTooltip="Ver Detalles"
+                            (click)="openServiceDetail()">
+                        </i>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text" 
+                            class="form__input"
+                            formControlName="date"
+                            readonly />
+                        <label class="form__label">Fecha:</label>
+                        <i class="form__icon fa-solid fa-calendar-day"></i>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text" 
+                            class="form__input"
+                            formControlName="hour"
+                            readonly />
+                        <label class="form__label">Hora:</label>
+                        <i class="form__icon fa-solid fa-clock"></i>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text" 
+                            class="form__input"
+                            formControlName="reason"
+                            readonly />
+                        <label class="form__label">Motivo:</label>
+                        <i class="form__icon fa-solid fa-comment"></i>
+                    </div>
+                </div>
+                
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text" 
+                            class="form__input"
+                            formControlName="status"
+                            readonly />
+                        <label class="form__label">Estado:</label>
+                        <i class="form__icon fa-solid fa-bars-staggered"></i>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text" 
+                            class="form__input"
+                            formControlName="professional"
+                            readonly />
+                        <label class="form__label">Profesional:</label>
+                        <i 
+                            class="form__icon form__icon--button fa-solid fa-user-tie"
+                            matTooltip="Ver Detalles"
+                            (click)="openProfessionalDetail()">
+                        </i>
+                    </div>
+                </div>
+
+            </section>
+        </form>
+    </section>
+
+</section>

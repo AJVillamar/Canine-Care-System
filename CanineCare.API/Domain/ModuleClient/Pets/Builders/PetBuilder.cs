@@ -1,6 +1,5 @@
-﻿using Domain.ModuleClient.Pets.Models;
-using Domain.ModuleClient.Owners.Models;
-using Domain.ModuleClient.Canines.Models;
+﻿using Domain.ModuleClient.Owners.Models;
+using Domain.ModuleClient.Pets.Models;
 
 namespace Domain.ModuleClient.Pets.Builders
 {
@@ -41,6 +40,16 @@ namespace Domain.ModuleClient.Pets.Builders
                 _extraInfo!,
                 _owner!
             );
+        }
+
+        public Pet BuildBasic()
+        {
+            return Pet.Create(_id.Value, _name, _owner);
+        }
+
+        public Pet BuildMinimal()
+        {
+            return Pet.Create(_id.Value);
         }
 
         private PetBuilder SetProperty<T>(ref T field, T value)

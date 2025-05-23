@@ -1,0 +1,113 @@
+<mat-sidenav-container>
+  
+  <mat-sidenav 
+    #drawer 
+    class="sidenav" 
+    fixedInViewport    
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false" > 
+    
+    <mat-toolbar class="container__toolbar--img">
+      <img src="/icons/logo-white.svg" class="toolbar__img" alt="logo">      
+      <span class="toolbar__title">Sistema Atención Canina</span>
+    </mat-toolbar>
+    
+    <mat-nav-list class="navigation">
+
+      <main class="accordion navigation__list" id="accordion-list">
+        @for (item of menuItems; track $index) {
+          <section class="accordion-item navigation__container">
+            <div 
+              [ngClass]="{'navigation__module--active': isActivePath(item.path!)}" 
+              class="navigation__module">
+              <button 
+                class="accordion-button" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                [attr.data-bs-target]="'#collapse' + $index">
+                <div class="navigation__icon">
+                  <i class="{{ item.data?.['icon'] }}"></i>
+                </div>
+                <div class="navigation__label">
+                  <span>{{ item.data?.['label']}}</span>
+                </div>
+              </button>
+            </div>
+            <div 
+              [id]="'collapse' + $index"
+              [class]="{ 'show': isActivePath(item.path!) }"
+              class="accordion-collapse collapse" 
+              data-bs-parent="#accordion-list"> 
+              <div class="accordion-body">
+                @for (view of item.data?.['children'] ; track $index) {
+                  <button type="button" class="navigation__item" [routerLink]="'/' + pathMain+ '/' + item.path + '/' + view.path">
+                    <div 
+                      [ngClass]="{'active__path--children': isActivePath(item.path!, view.path!)}" 
+                      class="navigation__indicator">
+                    </div>
+                    <div class="navigation__icon navigation__icon--sub">
+                      <i class="{{ view?.['icon'] }}"></i>
+                    </div>
+                    <div class="navigation__label navigation__label--sub">
+                      <span>{{ view?.['label']}}</span>
+                    </div>
+                  </button>
+                }
+              </div>
+            </div>
+          </section>
+        }
+      </main>
+    </mat-nav-list>
+  </mat-sidenav>
+  
+  <mat-sidenav-content [class]="{ 'layout--full': !drawer.opened }">
+    <mat-toolbar color="primary">
+      <div class="toolbar__top">
+        <section class="toolbar__top-left">
+          <button
+            type="button"
+            mat-icon-button
+            (click)="drawer.toggle()">
+            <mat-icon class="icon--transition">
+              {{ drawer.opened ? 'sort' : 'arrow_forward' }}
+            </mat-icon>
+          </button>
+          <span class="toolbar__title--left">{{ user?.fullName }}</span>
+        </section>
+        <div class="toolbar__top-right">
+          <button 
+            class="toolbar__icon"
+            matTooltip="Cerrar Sesión"
+            (click)="exitSession()">
+            <i class="toolbar__icon-inner fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </div>
+    </mat-toolbar>
+
+    <main class="container__view p-3 p-md-4">
+      <nav class="container-custom">
+        <ol class="breadcrumb m-0">
+          @for (part of getBreadcrumbItems(); track $index) {
+            <li class="breadcrumb-item">
+              <button
+                class="breadcrumb-link" 
+                (click)="navigateToBreadcrumb(part.url)">
+                  {{ part.label }}
+              </button>
+            </li>
+          }
+        </ol>
+      </nav>
+      <section class="container-custom container-custom__view">
+        <router-outlet />
+      </section>
+    </main>
+
+    <small class="text__footer">Copyright &copy; {{currentYear}}. Sistema Atención Canina | Todos los derechos reservados</small>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

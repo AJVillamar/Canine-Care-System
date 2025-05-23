@@ -1,4 +1,5 @@
 ﻿using Domain.Shared.Exceptions;
+using Domain.Shared.ValueObjects;
 using Domain.ModuleClient.Owners.Repositories;
 using Application.ModuleIdentity.Users.Validators;
 using Application.ModuleClient.Owners.Commands.CreateOwner;
@@ -31,13 +32,21 @@ namespace Application.ModuleClient.Owners.Validators
             if (await _ownerRepository.GetByIdAsync(command.Id) == null)
                 throw new NotFoundException("El Dueño de la mascota");
 
-            await _userValidator.ValidateCreateAsync(
-                email: command.Email);
+            if(!string.IsNullOrWhiteSpace(command.Email))
+                await _userValidator.ValidateUpdateAsync(email: command.Email);
         }
 
         public async Task ValidateGetByIdAsync(Guid id)
         {
             if (await _ownerRepository.GetByIdAsync(id) == null)
+                throw new NotFoundException("El Dueño de la mascota");
+        }
+
+        public async Task ValidateGetByIdentificationAsync(string identification)
+        {
+            Identification.Create(identification);
+
+            if( await _ownerRepository.GetByIdentificationAsync(identification) == null)
                 throw new NotFoundException("El Dueño de la mascota");
         }
     }

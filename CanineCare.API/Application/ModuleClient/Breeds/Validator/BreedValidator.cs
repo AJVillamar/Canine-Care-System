@@ -1,6 +1,6 @@
 ﻿using Domain.Shared.Exceptions;
-using Domain.ModuleClient.Pets.Repositories;
 using Application.ModuleClient.Breeds.Commands.CreateBreed;
+using Domain.ModuleClient.Pets.Repositories;
 
 namespace Application.ModuleClient.Breeds.Validator
 {

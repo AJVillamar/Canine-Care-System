@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Application.ModuleAdministration.Professionals.Dtos;
 using Application.ModuleAdministration.Professionals.Commands.CreateProfessional;
 using Application.ModuleAdministration.Professionals.Queries.GetAllProfessionals;
+using Application.ModuleAdministration.Professionals.Queries.GetProfessionalById;
 
 namespace Presentation.Controllers.ModuleAdministration
 {
@@ -29,6 +30,14 @@ namespace Presentation.Controllers.ModuleAdministration
         public async Task<ActionResult<ApiResult<List<ProfessionalDto>>>> GetAll()
         {
             var response = await _mediator.Send(new GetAllProfessionalsQuery());
+            return Ok(response);
+        }
+
+        [HttpGet("by-id/{professionalId}")]
+        public async Task<ActionResult<ApiResult<ProfessionalDto>>> GetById([FromRoute] Guid professionalId)
+        {
+            var command = new GetProfessionalByIdQuery { ProfessionalId = professionalId };
+            var response = await _mediator.Send(command);
             return Ok(response);
         }
     }

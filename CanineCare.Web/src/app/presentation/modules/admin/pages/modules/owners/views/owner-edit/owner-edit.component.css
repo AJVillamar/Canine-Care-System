@@ -1,0 +1,12 @@
+.form__search {
+    max-width: 250px;
+    width: 100%;
+}
+
+.button__control--search {
+    width: 40px;
+}
+
+.button {
+    min-width: 200px;
+}

@@ -1,7 +1,7 @@
 ﻿using Domain.Shared.Utils;
 using Domain.Shared.Exceptions;
-using Domain.ModuleClient.Pets.Enums;
 using System.Text.RegularExpressions;
+using Domain.ModuleClient.Pets.Enums;
 
 namespace Domain.ModuleClient.Pets.Models
 {

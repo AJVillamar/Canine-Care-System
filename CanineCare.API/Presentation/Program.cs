@@ -3,6 +3,8 @@ using Presentation.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddJwtAuthentication(builder.Configuration);
+builder.Services.AddSwaggerDocumentation();
 builder.Services.AddApplicationModules(builder.Configuration);
 builder.Services.AddCustomCors();
 builder.Services.AddControllers();
@@ -20,6 +22,7 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors("AllowWebapp");
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

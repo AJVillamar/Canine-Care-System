@@ -6,6 +6,13 @@ namespace Infrastructure.Data.Mappers.People
 {
     public class OwnerMapperInfra
     {
+        public Owner ToDomain(Guid id)
+        {
+            return new OwnerBuilder()
+                .WithId(id)
+                .BuildReference();
+        }
+
         public Owner ToDomain(OwnerEntity entity)
         {
             return new OwnerBuilder()
@@ -34,7 +41,7 @@ namespace Infrastructure.Data.Mappers.People
         {
             entity.Person!.FirstName = domain.FirstName.Value;
             entity.Person.LastName = domain.LastName.Value;
-            entity.Person.Email = domain.Email.Value;
+            entity.Person.Email = domain.Email?.Value;
             entity.Person.UpdatedAt = DateTime.Now;
 
             entity.Phone = domain.Phone.Value;

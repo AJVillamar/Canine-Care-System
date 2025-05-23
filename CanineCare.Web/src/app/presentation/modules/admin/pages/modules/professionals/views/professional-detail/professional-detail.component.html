@@ -1,0 +1,88 @@
+<section class="container-fluid w-100 h-100 p-0">
+    <div class="panel__header">
+        <p class="panel__header--title">Detalle Profesional</p>
+    </div>
+    <button 
+        class="card__dismiss card__dismiss--white"         
+        (click)="onCancel()">×</button>
+    <section class="panel__body">
+        <form [formGroup]="form" >
+
+            <section class="row m-0 row-cols-md-2 p-3 p-md-4">
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text" 
+                            class="form__input" 
+                            formControlName="identification"
+                            readonly />
+                        <label class="form__label">Identificación:</label>
+                        <i class="form__icon fa-solid fa-fingerprint"></i>
+                    </div>
+                </div>
+                
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="email" 
+                            class="form__input"
+                            formControlName="email" 
+                            readonly />
+                        <label class="form__label">Correo Electrónico:</label>
+                        <i class="form__icon fa-solid fa-envelope"></i>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text"
+                            class="form__input"
+                            formControlName="firstName" 
+                            readonly />
+                        <label class="form__label">Nombres:</label>
+                        <i class="form__icon fa-solid fa-signature"></i>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text" 
+                            class="form__input"
+                            formControlName="lastName" 
+                            readonly />
+                        <label class="form__label">Apellidos:</label>
+                        <i class="form__icon fa-solid fa-signature"></i>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="date" 
+                            class="form__input pe-2" 
+                            formControlName="birthDate" 
+                            readonly />
+                        <label class="form__label">Fecha de nacimiento:</label>
+                        <i class="form__icon fa-solid fa-calendar-day"></i>
+                    </div>
+                </div>
+                
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="number" 
+                            class="form__input"
+                            formControlName="yearsOfExperience" 
+                            readonly />
+                        <label class="form__label">Experiencia:</label>
+                        <i class="form__icon fa-solid fa-suitcase"></i>
+                    </div>
+                </div>
+                
+            </section>
+        </form>
+    </section>
+</section>

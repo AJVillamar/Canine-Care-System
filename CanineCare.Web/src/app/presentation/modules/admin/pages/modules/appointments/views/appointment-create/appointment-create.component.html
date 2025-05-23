@@ -1,0 +1,230 @@
+<section class="container-fluid w-100 h-100 p-0">
+    <div class="panel__header">
+        <p class="panel__header--title">Crear Cita</p>
+    </div>
+    <section class="panel__body">        
+        
+        
+        <form [formGroup]="searchForm">
+            
+            <section class="row m-0 row-cols-md-2 px-3 px-md-4 py-0">
+                <p class="panel__body--title">Busca al cliente y selecciona una mascota para agendar la cita</p>
+                
+                <div class="form__container d-flex justify-content-center align-items-start">
+                    <div class="form__group form__group--sm">
+                        <input 
+                            type="text" 
+                            placeholder="Ingrese el número de cédula o pasaporte"
+                            class="form__input"
+                            formControlName="identification"
+                            autocomplete="off"/>
+                        <label class="form__label">Buscar cliente:</label>
+                    </div>
+                    <button 
+                        class="button__control button__control--black button__control--search"
+                        type="submit"
+                        matTooltip="Buscar"
+                        (click)="onSearch()">
+                        @if (isSearchResult()) {
+                            <div class="spinner-border spinner-border-sm"></div>
+                        } @else {
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        }
+                    </button>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group form__group--sm">
+                        <select 
+                            class="form__input" 
+                            formControlName="pet"
+                            (change)="onSelectPet($event)">
+                            <option selected disabled value="">Seleccionar Mascota</option>
+                            @for (item of pets; track $index) {
+                                <option [value]="item.id">{{ item.name }}</option>
+                            }
+                        </select>
+                        <label class="form__label">Mascotas del cliente:</label>
+                        <i 
+                            class="form__icon form__icon--button fa-solid fa-solid fa-shield-dog"
+                            matTooltip="Ver Detalles"
+                            (click)="openPetDetail(pet.value)">
+                        </i>
+                    </div>
+                </div>
+
+            </section>
+        </form>
+        
+        <div class="hr">
+            <hr>
+        </div>
+        
+        @if (selectedPet != null) {
+            <p class="select__pet--title">Cita para {{ selectedPet.name ?? ''}}</p>
+
+        }
+    
+        <form [formGroup]="createForm">
+            <section class="row m-0 row-cols-md-2 px-3 px-md-4 py-0">
+                
+                <div class="form__container">
+                    <div class="form__group">                            
+                        <select 
+                            [class]="{'ms-1' : isLoadingDropdowns()}"
+                            class="form__input" 
+                            formControlName="serviceType"
+                            (change)="onSelectServiceType($event)" >
+                            <option selected disabled value="">Seleccionar categoría</option>
+                            @for (item of servicesType; track $index) {
+                                <option [value]="item">{{ item }}</option>
+                            }
+                        </select>
+                        <label class="form__label">Categoría de servicio:</label>
+                        <i 
+                            [class]="isLoadingDropdowns() ? 'fa-solid fa-spinner fa-spin w-auto' : 'fa-solid fa-tags'"
+                            class="form__icon">
+                        </i>
+                        <div class="form__alerts">
+                            @if (serviceType.invalid && (serviceType.dirty || serviceType.touched)) {
+                                @if (serviceType.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                } 
+                            }
+                        </div>
+                    </div>
+                </div>      
+                
+                <div class="form__container">
+                    <div class="form__group">                            
+                        <select 
+                            [class]="{'ms-1' : isLoadingDropdowns()}"
+                            class="form__input" 
+                            formControlName="serviceSelect">
+                            <option selected disabled value="">Seleccionar Servicio</option>
+                            @for (item of servicesSelectTypes; track $index) {
+                                <option [value]="item.id">{{ item.name }}</option>
+                            }
+                        </select>
+                        <label class="form__label">Servicio:</label>
+                        <i 
+                            [class]="isLoadingDropdowns() ? 'fa-solid fa-spinner fa-spin w-auto' : 'fa-solid fa-clipboard-list'"
+                            class="form__icon form__icon--button"
+                            matTooltip="Ver Detalles"
+                            (click)="openServiceDetail(serviceSelect.value)">
+                        </i>
+                        <div class="form__alerts">
+                            @if (serviceSelect.invalid && (serviceSelect.dirty || serviceSelect.touched)) {
+                                @if (serviceSelect.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                } 
+                            }
+                        </div>
+                    </div>
+                </div>      
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="date" 
+                            class="form__input pe-2" 
+                            formControlName="date" />
+                        <label class="form__label">Fecha:</label>
+                        <div class="form__alerts">
+                            @if (date.invalid && (date.dirty || date.touched)) {
+                                @if (date.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                } @else if (date.errors?.['onlyFuture']) {
+                                    <span class="form__alert">No se admiten fechas en pasado</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">                            
+                        <select 
+                            [class]="{'ms-1' : isLoadingDropdowns()}"
+                            class="form__input" 
+                            formControlName="hour">
+                            <option selected disabled value="">Seleccionar Hora</option>
+                            @for (item of hours; track $index) {
+                                <option [value]="item.time">{{ item.time?.slice(0, 5) }}</option>
+                            }
+                        </select>
+                        <label class="form__label">Horario:</label>
+                        <i 
+                            [class]="isLoadingDropdowns() ? 'fa-solid fa-spinner fa-spin w-auto' : 'fa-regular fa-clock'"
+                            class="form__icon">
+                        </i>
+                        <div class="form__alerts">
+                            @if (hour.invalid && (hour.dirty || hour.touched)) {
+                                @if (hour.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                } 
+                            }
+                        </div>
+                    </div>
+                </div>   
+                
+                <div class="form__container">
+                    <div class="form__group">                            
+                        <select 
+                            [class]="{'ms-1' : isLoadingDropdowns()}"
+                            class="form__input" 
+                            formControlName="professional">
+                            <option selected disabled value="">Seleccionar Profesional</option>
+                            @for (item of professionals; track $index) {
+                                <option [value]="item.id">{{ item.firstName }} {{ item.lastName }}</option>
+                            }
+                        </select>
+                        <label class="form__label">Seleccionar el profesional:</label>
+                        <i 
+                            [class]="isLoadingDropdowns() ? 'fa-solid fa-spinner fa-spin w-auto' : 'fa-solid fa-user-tie'"
+                            class="form__icon form__icon--button"
+                            matTooltip="Ver Detalles"
+                            (click)="openProfessionalDetail(professional.value)">
+                        </i>
+                        <div class="form__alerts">
+                            @if (professional.invalid && (professional.dirty || professional.touched)) {
+                                @if (professional.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                } 
+                            }
+                        </div>
+                    </div>
+                </div>     
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="email" 
+                            placeholder="Explique el mótivo"
+                            class="form__input"
+                            formControlName="reason"
+                            autocomplete="off" />
+                        <label class="form__label">Motivo (opcional):</label>
+                        <i class="form__icon fa-solid fa-message"></i>
+                    </div>
+                </div>
+                
+            </section>
+        </form>
+    </section> 
+    
+    <div class="panel__footer">
+        <div class="button">
+            <button 
+                class="button__control button__control--black float-end"
+                type="submit"
+                (click)="onSubmit()">
+                @if (isSubmitting()) {
+                    <div class="spinner-border spinner-border-sm"></div>
+                } @else {
+                    <span class="button__text">Registrar</span>
+                }
+            </button>
+        </div>
+    </div>
+</section>

@@ -35,6 +35,11 @@ namespace Domain.ModuleAdministration.Professionals.Builders
             );
         }
 
+        public Professional BuildMinimal()
+        {
+            return Professional.Create(_id.Value);
+        }
+
         private ProfessionalBuilder SetProperty<T>(ref T field, T value)
         {
             field = value;

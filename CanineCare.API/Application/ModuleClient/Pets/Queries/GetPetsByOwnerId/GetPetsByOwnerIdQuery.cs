@@ -1,6 +1,6 @@
-﻿using Application.ModuleClient.Pets.Dtos;
-using MediatR;
+﻿using MediatR;
 using Shared.Responses;
+using Application.ModuleClient.Pets.Dtos;
 
 namespace Application.ModuleClient.Pets.Queries.GetPetsByOwnerId
 {

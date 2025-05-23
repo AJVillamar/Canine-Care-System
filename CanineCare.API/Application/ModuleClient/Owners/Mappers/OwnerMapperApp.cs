@@ -37,6 +37,14 @@ namespace Application.ModuleClient.Owners.Mappers
             return domain;
         }
 
+        public OwnerDto ToDto(Guid id)
+        {
+            return new OwnerDto
+            {
+                Id = id
+            };
+        }
+
         public OwnerDto ToDto(Owner domain)
         {
             return new OwnerDto

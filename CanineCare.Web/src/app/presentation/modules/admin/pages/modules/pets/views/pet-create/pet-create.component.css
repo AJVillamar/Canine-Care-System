@@ -1,0 +1,61 @@
+.button {
+    min-width: 200px;
+}
+
+.form__group--sm {
+    height: auto;
+}
+
+select {
+    appearance: none;
+}
+
+.form__input--color {
+    padding: 5px;
+    padding-right: 10%;
+    background-color: white;
+}
+
+.form__input--last {
+    cursor: not-allowed;
+}
+
+.hr {
+    padding: 10px 35px;
+    margin: 15px 0;
+    margin-bottom: 25px;
+}
+
+.button__control--search {
+    width: 40px;
+}
+
+.form__group--area {
+    height: 90px;
+}
+
+.form__input--area {
+    height: 50px;
+}
+
+textarea {
+    resize: none;
+}
+
+@media (max-width: 768px) {
+
+    .form__group--sm {
+        height: 70px;
+    }
+
+    .form__group--last {
+        height: 50px;
+    }
+
+    .hr {
+        padding: 10px 30px;
+        margin-top: 0;
+        padding-top: 0;
+    }
+
+}

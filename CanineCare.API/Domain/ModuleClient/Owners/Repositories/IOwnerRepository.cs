@@ -3,5 +3,8 @@ using Domain.ModuleClient.Owners.Models;
 
 namespace Domain.ModuleClient.Owners.Repositories
 {
-    public interface IOwnerRepository : IRepository<Owner> { }
+    public interface IOwnerRepository : IRepository<Owner> 
+    {
+        Task<Owner?> GetByIdentificationAsync(string identification);
+    }
 }

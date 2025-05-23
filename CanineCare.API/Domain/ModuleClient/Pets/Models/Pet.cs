@@ -1,11 +1,10 @@
 ﻿using Domain.Shared.Utils;
 using Domain.Shared.Exceptions;
-using Domain.ModuleClient.Pets.Enums;
-using Domain.ModuleClient.Pets.Models;
 using Domain.ModuleClient.Owners.Models;
+using Domain.ModuleClient.Pets.Enums;
 using Domain.ModuleClient.Pets.ValueObjects;
 
-namespace Domain.ModuleClient.Canines.Models
+namespace Domain.ModuleClient.Pets.Models
 {
     public class Pet
     {
@@ -26,6 +25,30 @@ namespace Domain.ModuleClient.Canines.Models
         public PetExtraInfo ExtraInfo { get; private set; }
 
         public Owner Owner { get; private set; }
+
+        private Pet(Guid id)
+        {
+            if (id == Guid.Empty)
+                throw new EmptyFieldException("Id del canino");
+
+            Id = id;
+        }
+
+        private Pet(Guid id, string name, Owner owner)
+        {
+            if (id == Guid.Empty)
+                throw new EmptyFieldException("Id del canino");
+
+            if (string.IsNullOrWhiteSpace(name))
+                throw new EmptyFieldException("nombre");
+
+            if (owner is null)
+                throw new EmptyFieldException("Id del canino");
+
+            Id = id;
+            Name = name;
+            Owner = owner;
+        }
 
         private Pet(Guid id, string name, Breed breed, DateTime birthDate, SexType sex, string color, Weight weight, PetExtraInfo extraInfo, Owner owner)
         {
@@ -55,6 +78,16 @@ namespace Domain.ModuleClient.Canines.Models
                 extraInfo,
                 owner
             );
+        }
+
+        public static Pet Create(Guid id, string name, Owner owner)
+        {
+            return new Pet(id, name, owner);
+        }
+
+        public static Pet Create(Guid id)
+        {
+            return new Pet(id);
         }
 
         public void UpdateName(string name)

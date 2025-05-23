@@ -77,6 +77,15 @@ namespace Infrastructure.Data.Repositories.People
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<Owner?> GetByIdentificationAsync(string identification)
+        {
+            return await _context.Owners
+                .Include(o => o.Person)
+                .Where(o => o.Person.Identification == identification && o.IsActive)
+                .Select(o => _ownerMapper.ToDomain(o))
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<Owner>> GetAllAsync()
         {
             return await _context.Owners

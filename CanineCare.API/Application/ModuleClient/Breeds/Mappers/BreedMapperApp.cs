@@ -1,8 +1,8 @@
-﻿using Domain.ModuleClient.Pets.Enums;
-using Domain.ModuleClient.Pets.Models;
-using Domain.ModuleClient.Pets.Builders;
+﻿using Domain.ModuleClient.Pets.Builders;
 using Application.ModuleClient.Breeds.Dtos;
 using Application.ModuleClient.Breeds.Commands.CreateBreed;
+using Domain.ModuleClient.Pets.Enums;
+using Domain.ModuleClient.Pets.Models;
 
 namespace Application.ModuleClient.Breeds.Mappers
 {

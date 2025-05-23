@@ -1,0 +1,76 @@
+<section class="container-fluid w-100 h-100 p-0">
+    <div class="panel__header">
+        <p class="panel__header--title">Detalle del Servicio</p>
+    </div>
+    <button 
+        class="card__dismiss card__dismiss--white"         
+        (click)="onCancel()">×</button>
+    <section class="panel__body">
+        <form [formGroup]="form">
+
+            <section class="row m-0 row-cols-md-2 p-3 p-md-4">
+
+              <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text" 
+                            class="form__input"
+                            formControlName="name" 
+                            readonly />
+                        <label class="form__label">Nombre:</label>
+                        <i class="form__icon fa-solid fa-signature"></i>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group form__group--sm">
+                        <input 
+                            type="text" 
+                            class="form__input"
+                            formControlName="type" 
+                            readonly />
+                        <label class="form__label">Tipo de Servicio:</label>
+                        <i class="form__icon fa-solid fa-solid fa-tags"></i>
+                    </div>
+                </div>
+                        
+                <div class="form__container w-100">
+                    <div class="form__group form__group--area h-auto">
+                        <textarea
+                            class="form__input form__input--area"
+                            formControlName="description"
+                            readonly >
+                        </textarea>
+                        <label class="form__label">Descripción:</label>
+                        <i class="form__icon fa-solid fa-message"></i>
+                    </div>
+                </div>
+                
+                @if (dataSource.data.length !== 0) {
+                    <main class="container__table mt-4">
+                        <mat-table [dataSource]="dataSource">
+                            
+                            <ng-container matColumnDef="title">
+                                <mat-header-cell *matHeaderCellDef> 
+                                    <span class="container__table--title">Título</span>
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element">{{ element.title }}</mat-cell>
+                            </ng-container>
+    
+                            <ng-container matColumnDef="description">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <span class="container__table--title">Descripción</span>
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
+                            </ng-container>
+    
+                            <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;" class="table__header"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                        </mat-table>
+                    </main>                
+                }
+
+            </section>
+        </form>
+    </section>
+</section>

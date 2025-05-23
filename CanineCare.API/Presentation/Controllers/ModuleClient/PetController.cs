@@ -5,8 +5,10 @@ using Application.ModuleClient.Pets.Dtos;
 using Application.ModuleClient.Pets.Commands.CreatePet;
 using Application.ModuleClient.Pets.Commands.UpdatePet;
 using Application.ModuleClient.Pets.Queries.GetAllPets;
+using Application.ModuleClient.Pets.Queries.GetPetById;
 using Application.ModuleClient.Pets.Queries.GetPetsByOwnerId;
 using Application.ModuleClient.Pets.Queries.SearchPetsByNameOrOwnerName;
+using Application.ModuleClient.Pets.Queries.GetPetsByOwnerIdentification;
 
 namespace Presentation.Controllers.ModuleClient
 {
@@ -42,10 +44,26 @@ namespace Presentation.Controllers.ModuleClient
             return Ok(response);
         }
 
+        [HttpGet("by-id/{id}")]
+        public async Task<ActionResult<ApiResult<List<PetDto>>>> GetById([FromRoute] Guid id)
+        {
+            var query = new GetPetByIdQuery { Id = id };
+            var response = await _mediator.Send(query);
+            return Ok(response);
+        }
+
         [HttpGet("owner/{ownerId}")]
         public async Task<ActionResult<ApiResult<List<PetDto>>>> GetByOwnerId([FromRoute] Guid ownerId)
         {
             var query = new GetPetsByOwnerIdQuery { OwnerId = ownerId };
+            var response = await _mediator.Send(query);
+            return Ok(response);
+        }
+
+        [HttpGet("by-identification/{identification}")]
+        public async Task<ActionResult<ApiResult<List<PetDto>>>> GetByOwnerIdentification([FromRoute] string identification)
+        {
+            var query = new GetPetsByOwnerIdentificationQuery { Identification = identification };
             var response = await _mediator.Send(query);
             return Ok(response);
         }

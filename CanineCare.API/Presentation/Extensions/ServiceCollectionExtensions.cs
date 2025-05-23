@@ -1,9 +1,11 @@
 ﻿using Infrastructure.DependencyInjection;
 using Application.Shared.DependencyInjection;
 using Application.ModuleClient.Pets.DependencyInjection;
-using Application.ModuleClient.Owners.DependencyInjection;
 using Application.ModuleClient.Breeds.DependencyInjection;
+using Application.ModuleClient.Owners.DependencyInjection;
 using Application.ModuleIdentity.Users.DependencyInjection;
+using Application.ModuleClient.Services.DependencyInjection;
+using Application.ModuleClient.Appointments.DependencyInjection;
 using Application.ModuleAdministration.Admins.DependencyInjection;
 using Application.ModuleIdentity.Authentication.DependencyInjection;
 using Application.ModuleAdministration.Professionals.DependencyInjection;
@@ -24,6 +26,8 @@ namespace Presentation.Extensions
             AuthenticationApplicationServiceCollectionExtensions.AddAuthenticationApplicationServices(services);
             BreedApplicationServiceCollectionExtensions.AddBreedApplicationServices(services);
             PetApplicationServiceCollectionExtensions.AddPetApplicationServices(services);
+            ServiceApplicationServiceCollectionExtensions.AddServiceApplicationServices(services);
+            AppointmentApplicationServiceCollectionExtensions.AddAppointmentApplicationServices(services);
         }
     }
 }

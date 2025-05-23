@@ -11,6 +11,12 @@ namespace Domain.ModuleAdministration.Professionals.Models
 
         public int YearsOfExperience { get; private set; }
 
+        private Professional(Guid id) : base(id)
+        {
+            if (id == Guid.Empty)
+                throw new EmptyFieldException("Id del profesional");
+        }
+
         private Professional(
             Guid id, Identification identification, Name firstName,
             Name lastName, Email? email, DateTime birthDate, int yearsOfExperience)
@@ -40,6 +46,11 @@ namespace Domain.ModuleAdministration.Professionals.Models
                 professional.GeneratePassword();
 
             return professional;
+        }
+
+        public static Professional Create(Guid id)
+        {
+            return new Professional(id);
         }
 
         public void UpdateBirthDate(DateTime birthDate)

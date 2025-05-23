@@ -2,7 +2,7 @@
 using Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data.Mappers.Pets;
-using Domain.ModuleClient.Canines.Models;
+using Domain.ModuleClient.Pets.Models;
 using Domain.ModuleClient.Pets.Repositories;
 
 namespace Infrastructure.Data.Repositories.Pets
@@ -99,6 +99,19 @@ namespace Infrastructure.Data.Repositories.Pets
                 .Include(p => p.Breed)
                 .Include(p => p.PetExtraInfo)
                 .Where(p => (p.Owner.PersonId == ownerId || p.OwnerId == ownerId) && p.IsActive)
+                .OrderBy(p => p.Name)
+                .Select(p => _petMapper.ToDomain(p))
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Pet>> GetByOwnerIdentificationAsync(string identification)
+        {
+            return await _context.Pets
+                .Include(p => p.Owner)
+                    .ThenInclude(o => o.Person)
+                .Include(p => p.Breed)
+                .Include(p => p.PetExtraInfo)
+                .Where(p => p.Owner.Person.Identification == identification && p.IsActive)
                 .OrderBy(p => p.Name)
                 .Select(p => _petMapper.ToDomain(p))
                 .ToListAsync();

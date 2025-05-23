@@ -1,0 +1,4 @@
+export const APP_ROUTES_MODULES = {
+    MODULE_AUTHENTICATION: 'auth',
+    MODULE_ADMINISTRATION: 'admin',
+};

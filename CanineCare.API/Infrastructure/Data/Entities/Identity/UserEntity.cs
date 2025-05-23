@@ -17,6 +17,8 @@ namespace Infrastructure.Data.Entities.Identity
         [StringLength(1000)]
         public string? Password { get; set; }
 
+        public int LoginAttempts { get; set; } = 0;
+
         public virtual PersonEntity? Person { get; set; }
     }
 }

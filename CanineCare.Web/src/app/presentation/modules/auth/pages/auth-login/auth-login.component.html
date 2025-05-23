@@ -1,0 +1,84 @@
+<section class="container-fluid w-100 min-vh-100 d-flex justify-content-center align-items-center position-relative overflow-hidden px-4 px-lg-0">
+    <div class="container z-1 h-100 d-flex p-0">
+        <main class="login d-flex flex-column justify-content-center align-items-center px-5 py-4">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <img 
+                src="/icons/logo-base.svg" 
+                class="login__logo" 
+                alt="logo">
+                <p class="login__title">Sistema Atención Canina</p>
+            </div>
+            <hr class="hr">
+            <form 
+                class="w-100"
+                [formGroup]="form" 
+                (ngSubmit)="onSubmit()">
+
+                <p class="login__subtitle">Por favor, ingresa sus credenciales</p>
+
+                <div class="form__group">
+                    <input 
+                        type="text" 
+                        class="form__input" 
+                        placeholder="Nombre de identificación" 
+                        autocomplete="off"
+                        formControlName="identification">
+                    <label class="form__label">Identificación</label>
+                    <i class="form__icon fa-solid fa-address-card"></i>
+                    <div class="form__alerts">
+                        @if (identification.invalid && (identification.dirty || identification.touched)) {
+                            @if (identification.errors?.['required']) {
+                                <p class="form__alert">Campo obligatorio</p>
+                            } @else if (identification.errors?.['maxlength']) {
+                                <p class="form__alert">Excedió el máximo de caracteres</p>
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div class="form__group">
+                    <input 
+                        [type]="isPasswordVisible() ? 'text' : 'password'" 
+                        class="form__input" 
+                        placeholder="Contraseña de seguridad" 
+                        autocomplete="off"
+                        formControlName="password" >
+                    <label class="form__label">Contraseña</label>
+                    <i 
+                        class="form__icon form__icon--eye"
+                        [class]="isPasswordVisible() ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'" 
+                        (click)="togglePasswordVisibility()">
+                    </i>
+                    <div class="form__alerts">
+                        @if (password.invalid && (password.dirty || password.touched)) {
+                            @if (password.errors?.['required']) {
+                                <p class="form__alert">Campo obligatorio</p>
+                            } @else if (password.errors?.['maxlength']) {
+                                <p class="form__alert">Excedió el máximo de caracteres</p>
+                            }
+                        }                            
+                    </div>
+                </div>
+
+                <div class="button">
+                    <button 
+                    type="submit" 
+                    class="button__control button__control--black float-end">
+                        @if (isLoading()) {
+                            <div class="spinner-border spinner-border-sm"></div>
+                        } @else {
+                            <span class="button__text">Iniciar Sesión</span>
+                        }
+                    </button>
+                </div>
+
+            </form>
+        </main>
+        <aside class="container__image p-3 d-none d-sm-block">
+            <img 
+                src="/images/login-image.png" 
+                class="login__image w-100 h-100 object-fit-cover" 
+                alt="image" >
+        </aside>
+    </div>
+</section>

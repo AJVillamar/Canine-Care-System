@@ -1,5 +1,5 @@
 ﻿using Domain.Shared.Repositories;
-using Domain.ModuleClient.Canines.Models;
+using Domain.ModuleClient.Pets.Models;
 
 namespace Domain.ModuleClient.Pets.Repositories
 {
@@ -8,5 +8,7 @@ namespace Domain.ModuleClient.Pets.Repositories
         Task<IEnumerable<Pet>> SearchByPetNameOrOwnerNameAsync(string searchTerm);
 
         Task<IEnumerable<Pet>> GetByOwnerIdAsync(Guid ownerId);
+
+        Task<IEnumerable<Pet>> GetByOwnerIdentificationAsync(string identification);
     }
 }

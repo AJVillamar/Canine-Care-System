@@ -1,0 +1,129 @@
+<section class="container-fluid w-100 h-10 p-0">
+
+    <div class="panel__header panel__header--white">
+        <p class="panel__header--title">Buscar Caninos</p>
+    </div>
+
+    <section class="panel__body p-2 p-md-3">
+
+        <form [formGroup]="searchForm" class="my-5">
+            
+            <section class="row m-0 row-cols-md-2">
+                <div class="form__container d-flex justify-content-center align-items-start">
+                    <div class="form__group form__group--sm">
+                        @if (isDateSearch) {
+                            <input 
+                                type="date" 
+                                class="form__input pe-2"
+                                formControlName="date"/>
+                        } @else {
+                            <input 
+                                type="text" 
+                                placeholder="Ingrese nombre del canino, nombres o cédula del profesional"
+                                class="form__input pe-2"
+                                formControlName="query"
+                                autocomplete="off"/>
+                        }
+                        <label class="form__label d-flex gap-5">
+                            Buscar citas:
+                            <div class="checkbox-wrapper-46">
+                                <input 
+                                    type="checkbox" 
+                                    id="cbx-46" 
+                                    class="inp-cbx" 
+                                    [checked]="isDateSearch"
+                                    (change)="onCheckboxChange($event)" />
+                                <label for="cbx-46" class="cbx">
+                                    <span>
+                                        <svg viewBox="0 0 12 10" height="10px" width="12px">
+                                            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                        </svg>
+                                    </span>
+                                    <span>Fecha</span>
+                                </label>
+                            </div>
+                        </label>
+                    </div>
+                    <button 
+                        class="button__control button__control--black button__control--search"
+                        type="submit"
+                        matTooltip="Buscar"
+                        (click)="onSearch()">
+                        @if (isLoading()) {
+                            <div class="spinner-border spinner-border-sm"></div>
+                        } @else {
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        }
+                    </button>
+                </div>
+            </section>
+        </form>        
+
+        @if (isLoading()) {
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        }
+
+        <main class="container__table mb-5">
+            <mat-table [dataSource]="dataSource">
+                
+                <ng-container matColumnDef="petName">
+                    <mat-header-cell *matHeaderCellDef> 
+                         <span class="container__table--title">Canino</span>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{ element.pet.name }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="date">
+                    <mat-header-cell *matHeaderCellDef>
+                        <span class="container__table--title">Fecha</span>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{ element.date }} - {{ element.time }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="professionalName">
+                    <mat-header-cell *matHeaderCellDef>
+                        <span class="container__table--title">Profesional</span>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{ element.professional.firstName }} {{ element.professional.lastName }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef>
+                        <span class="container__table--title">Estado</span>
+                    </mat-header-cell>
+                   <mat-cell *matCellDef="let element">
+                        <span class="badge" [ngClass]="getStatusClass(element.status)">
+                            {{ element.status }}
+                        </span>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef> 
+                        <span class="container__table--title">Detalles</span>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <button 
+                            class="button--action" 
+                            type="button" 
+                            matTooltip="Modificar"
+                            (click)="openUpdate(element)">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                        <button 
+                            class="button--action" 
+                            type="button" 
+                            matTooltip="Cancelar"
+                            (click)="onCancel(element)">
+                            <i class="fa-solid fa-ban"></i>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;" class="table__header"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </main>
+        
+    </section>
+</section>

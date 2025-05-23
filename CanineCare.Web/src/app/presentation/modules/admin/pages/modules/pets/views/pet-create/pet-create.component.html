@@ -1,0 +1,346 @@
+<section class="container-fluid w-100 h-100 p-0">
+    <div class="panel__header">
+        <p class="panel__header--title">Registrar Mascota</p>
+    </div>
+    <section class="panel__body">        
+        
+        <ol class="step-indicator">
+            @for (step of steps; track $index) {
+                <li 
+                    [class.active]="step.id === currentStep" 
+                    [class.complete]="currentStep > step.id" >
+                    <button 
+                        class="step"
+                        (click)="changeStep(step.id)">
+                        <i [class]="step.iconClass"></i>
+                    </button>
+                    <div class="caption">{{ step.title }}</div>
+                </li>
+            }
+        </ol>
+
+        @if (currentStep === 1) {
+
+              <form [formGroup]="searchForm">
+                <section class="row m-0 row-cols-md-2 px-3 px-md-4 pt-3">
+                    
+                    <div class="form__container d-flex justify-content-center align-items-start">
+                        <div class="form__group form__group--sm">
+                            <input 
+                                type="text" 
+                                placeholder="Ingrese el número de cédula"
+                                class="form__input"
+                                formControlName="identification"
+                                autocomplete="off"/>
+                            <label class="form__label">Buscar cliente:</label>
+                        </div>
+                        <button 
+                            class="button__control button__control--black button__control--search"
+                            type="submit"
+                            matTooltip="{{ hasOwnerData() ? 'Limpiar' : 'Buscar' }}"
+                            (click)="hasOwnerData() ? resetSearch() : onSearch()">
+                            @if (isSearchResult()) {
+                                <div class="spinner-border spinner-border-sm"></div>
+                            } @else {
+                                <i class="fa-solid" [ngClass]="hasOwnerData() ? 'fa-broom' : 'fa-magnifying-glass'"></i>
+                            }
+                        </button>
+                    </div>
+
+                    <div class="form__container">
+                        <div class="form__group form__group--sm">
+                            <input 
+                                type="text" 
+                                placeholder="Nombres del cliente"
+                                class="form__input form__input--last"
+                                formControlName="ownerFullName"
+                                readonly />
+                            <label class="form__label">Cliente:</label>
+                            <i class="form__icon fa-solid fa-circle-user"></i>
+                        </div>
+                    </div>
+                    
+                </section>
+            </form>
+            
+            <div class="hr">
+                <hr>
+            </div>
+
+            <form [formGroup]="basicInfoForm">
+                <section class="row m-0 row-cols-md-2 px-3 px-md-4">
+
+                    <input 
+                        type="text"
+                        class="d-none"
+                        formControlName="ownerId"
+                        readonly />
+                     
+                    <div class="form__container">
+                        <div class="form__group">
+                            <input 
+                                type="text" 
+                                placeholder="Nombre de la mascota"
+                                class="form__input"
+                                formControlName="name"
+                                autocomplete="off"/>
+                            <label class="form__label">Nombre:</label>
+                            <i class="form__icon fa-solid fa-signature"></i>
+                            <div class="form__alerts">
+                                @if (name.invalid && (name.dirty || name.touched)) {
+                                    @if (name.errors?.['required']) {
+                                        <span class="form__alert">Campo obligatorio</span>
+                                    } @else if(name.errors?.['maxlength']) {
+                                        <span class="form__alert">Excedió el máximo de caracteres</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form__container">
+                        <div class="form__group">                            
+                            <select 
+                                [class]="{'ms-1' : isLoadingDropdowns()}"
+                                class="form__input" 
+                                formControlName="breed">
+                                <option selected disabled value="">Seleccionar Raza</option>
+                                @for (item of breeds; track $index) {
+                                    <option [value]="item.id">{{ item.name }}</option>
+                                }
+                            </select>
+                            <label class="form__label">Raza:</label>
+                            <i 
+                                [class]="isLoadingDropdowns() ? 'fa-solid fa-spinner fa-spin w-auto' : 'fa-solid fa-dog'"
+                                class="form__icon">
+                            </i>
+                            <div class="form__alerts">
+                                @if (breed.invalid && (breed.dirty || breed.touched)) {
+                                    @if (breed.errors?.['required']) {
+                                        <span class="form__alert">Campo obligatorio</span>
+                                    } 
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form__container">
+                        <div class="form__group">
+                            <input 
+                                type="date" 
+                                class="form__input pe-2"
+                                formControlName="birthDate"
+                                autocomplete="off"/>
+                            <label class="form__label">Fecha Nacimiento (Aproximado):</label>
+                            <div class="form__alerts">
+                                @if (birthDate.invalid && (birthDate.dirty || birthDate.touched)) {
+                                    @if (birthDate.errors?.['required']) {
+                                        <span class="form__alert">Campo obligatorio</span>
+                                    } @else if (birthDate.errors?.['onlyPast']) {
+                                        <span class="form__alert">La fecha no puede ser futura</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form__container">
+                        <div class="form__group">                            
+                            <select 
+                                [class]="{'ms-1' : isLoadingDropdowns()}"
+                                class="form__input" 
+                                formControlName="sex">
+                                <option selected disabled value="">Seleccionar Sexo</option>
+                                <option value="Macho">Macho</option>
+                                <option value="Hembra">Hembra</option>
+                            </select>
+                            <label class="form__label">Sexo:</label>
+                            <i 
+                                [class]="isLoadingDropdowns() ? 'fa-solid fa-spinner fa-spin w-auto' : 'fa-solid fa-venus-mars'"
+                                class="form__icon">
+                            </i>
+                            <div class="form__alerts">
+                                @if (sex.invalid && (sex.dirty || sex.touched)) {
+                                    @if (sex.errors?.['required']) {
+                                        <span class="form__alert">Campo obligatorio</span>
+                                    } 
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form__container">
+                        <div class="form__group">
+                            <input 
+                                type="color" 
+                                class="form__input form__input--color"
+                                formControlName="color"
+                                autocomplete="off"/>
+                            <label class="form__label">Color de pelaje:</label>
+                            <i class="form__icon fa-solid fa-droplet"></i>
+                            <div class="form__alerts">
+                                @if (color.invalid && (color.dirty || color.touched)) {
+                                    @if (color.errors?.['required']) {
+                                        <span class="form__alert">Campo obligatorio</span>
+                                    } @else if(color.errors?.['maxlength']) {
+                                        <span class="form__alert">Excedió el máximo de caracteres</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form__container">
+                        <div class="form__group">
+                            <input 
+                                type="number" 
+                                class="form__input"
+                                formControlName="weight"
+                                placeholder="Peso de la mascota"
+                                autocomplete="off"
+                                PriceOnly />
+                            <label class="form__label">Peso:</label>
+                            <i class="form__icon fa-solid fa-weight-scale"></i>
+                            <div class="form__alerts">
+                                @if (weight.invalid && (weight.dirty || weight.touched)) {
+                                    @if (weight.errors?.['required']) {
+                                        <span class="form__alert">Campo obligatorio</span>
+                                    } @else if(color.errors?.['maxlength']) {
+                                        <span class="form__alert">Excedió el máximo de caracteres</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+            </form>
+        }
+
+        @else if (currentStep === 2) {
+            <form [formGroup]="additionalInfoForm">
+                <section class="row m-0 row-cols-md-2 px-3 px-md-4">
+
+                    <div class="form__container">
+                        <div class="form__group form__group--area">
+                            <textarea
+                                class="form__input form__input--area"
+                                formControlName="allergies"
+                                placeholder="Alergias conocidas"
+                                autocomplete="off">
+                            </textarea>
+                            <label class="form__label">Alergias:</label>
+                            <i class="form__icon fa-solid fa-pills"></i>
+                            <div class="form__alerts">
+                                @if (allergies.invalid && (allergies.dirty || allergies.touched)) {
+                                    @if (allergies.errors?.['required']) {
+                                        <span class="form__alert">Campo obligatorio</span>
+                                    } @else if(allergies.errors?.['maxlength']) {
+                                        <span class="form__alert">Excedió el máximo de caracteres</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form__container">
+                        <div class="form__group form__group--area">
+                            <textarea
+                                class="form__input form__input--area"
+                                formControlName="preExistingConditions"
+                                placeholder="Condiciones preexistentes"
+                                autocomplete="off">
+                            </textarea>
+                            <label class="form__label">Condiciones preexistentes:</label>
+                            <i class="form__icon fa-solid fa-notes-medical"></i>
+                            <div class="form__alerts">
+                                @if (preExistingConditions.invalid && (preExistingConditions.dirty || preExistingConditions.touched)) {
+                                    @if (preExistingConditions.errors?.['required']) {
+                                        <span class="form__alert">Campo obligatorio</span>
+                                    } @else if(preExistingConditions.errors?.['maxlength']) {
+                                        <span class="form__alert">Excedió el máximo de caracteres</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form__container">
+                        <div class="form__group form__group--area">
+                            <textarea
+                                class="form__input form__input--area"
+                                formControlName="specialCareInstructions"
+                                placeholder="Cuidados especiales"
+                                autocomplete="off">
+                            </textarea>
+                            <label class="form__label">Cuidados especiales:</label>
+                            <i class="form__icon fa-solid fa-hand-holding-medical"></i>
+                            <div class="form__alerts">
+                                @if (specialCareInstructions.invalid && (specialCareInstructions.dirty || specialCareInstructions.touched)) {
+                                    @if (specialCareInstructions.errors?.['required']) {
+                                        <span class="form__alert">Campo obligatorio</span>
+                                } @else if(specialCareInstructions.errors?.['maxlength']) {
+                                    <span class="form__alert">Excedió el máximo de caracteres</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form__container">
+                        <div class="form__group form__group--area">
+                            <textarea
+                                class="form__input form__input--area"
+                                formControlName="feedingNotes"
+                                placeholder="Notas de alimentación"
+                                autocomplete="off">
+                            </textarea>
+                            <label class="form__label">Notas de alimentación:</label>
+                            <i class="form__icon fa-solid fa-bowl-food"></i>
+                            <div class="form__alerts">
+                                @if (feedingNotes.invalid && (feedingNotes.dirty || feedingNotes.touched)) {
+                                    @if (feedingNotes.errors?.['required']) {
+                                        <span class="form__alert">Campo obligatorio</span>
+                                    } @else if(feedingNotes.errors?.['maxlength']) {
+                                        <span class="form__alert">Excedió el máximo de caracteres</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+            </form>
+        }
+
+    </section>
+
+    <div class="panel__footer panel__footer--step">
+        <section class="button__container button__container--group">
+            <button 
+                type="button" 
+                class="button button__control button__control--black button__step" 
+                [disabled]="currentStep === 1"
+                (click)="previousStep()">
+                    <i class="button__icon fa-solid fa-caret-left"></i>
+                    <span class="button__text">Atrás</span>
+            </button>
+            <button 
+                type="submit" 
+                class="button button__control button__control--black" 
+                (click)="currentStep === steps.length ? onSubmit() : nextStep()">
+                @if(currentStep === steps.length) {
+                    @if (!isSubmitting()) {
+                        <span class="button__text">Registrar</span>
+                        <i class="button__icon fa-solid fa-caret-right"></i>
+                    } @else {            
+                        <i class="button__icon button__icon--spin fa-solid fa-spinner fa-spin"></i>
+                    }
+                } @else {
+                    <span class="button__text">Siguiente</span>
+                    <i class="button__icon fa-solid fa-caret-right"></i>
+                }
+            </button>
+        </section> 
+    </div>
+</section>

@@ -1,0 +1,64 @@
+<section class="container-fluid w-100 h-100 p-0">
+    <div class="panel__header">
+        <p class="panel__header--title">Información Complementaria</p>
+    </div>
+    <button 
+        class="card__dismiss card__dismiss--white"         
+        (click)="onCancel()">×</button>
+    <section class="panel__body">
+        <form [formGroup]="additionalInfoForm" >
+
+            <section class="row m-0 row-cols-md-2 p-3 p-md-4">
+
+                <div class="form__container">
+                    <div class="form__group form__group--area">
+                        <textarea
+                            class="form__input form__input--area"
+                            formControlName="allergies"
+                            readonly >
+                        </textarea>
+                        <label class="form__label">Alergias:</label>
+                        <i class="form__icon fa-solid fa-pills"></i>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group form__group--area">
+                        <textarea
+                            class="form__input form__input--area"
+                            formControlName="preExistingConditions"
+                            readonly >
+                        </textarea>
+                        <label class="form__label">Condiciones preexistentes:</label>
+                        <i class="form__icon fa-solid fa-notes-medical"></i>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group form__group--area">
+                        <textarea
+                            class="form__input form__input--area"
+                            formControlName="specialCareInstructions"
+                            readonly >
+                        </textarea>
+                        <label class="form__label">Cuidados especiales:</label>
+                        <i class="form__icon fa-solid fa-hand-holding-medical"></i>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group form__group--area">
+                        <textarea
+                            class="form__input form__input--area"
+                            formControlName="feedingNotes"
+                            readonly >
+                        </textarea>
+                        <label class="form__label">Notas de alimentación:</label>
+                        <i class="form__icon fa-solid fa-bowl-food"></i>
+                    </div>
+                </div>
+                
+            </section>
+        </form>
+    </section>
+</section>

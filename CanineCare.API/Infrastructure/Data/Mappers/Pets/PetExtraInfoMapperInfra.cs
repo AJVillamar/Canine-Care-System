@@ -1,6 +1,6 @@
-﻿using Domain.ModuleClient.Pets.Models;
-using Infrastructure.Data.Entities.Pet;
+﻿using Infrastructure.Data.Entities.Pet;
 using Domain.ModuleClient.Pets.Builders;
+using Domain.ModuleClient.Pets.Models;
 
 namespace Infrastructure.Data.Mappers.Pets
 {

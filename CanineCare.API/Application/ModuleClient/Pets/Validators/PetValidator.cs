@@ -1,8 +1,8 @@
 ﻿using Domain.Shared.Exceptions;
-using Domain.ModuleClient.Pets.Repositories;
 using Domain.ModuleClient.Owners.Repositories;
 using Application.ModuleClient.Pets.Commands.CreatePet;
 using Application.ModuleClient.Pets.Commands.UpdatePet;
+using Domain.ModuleClient.Pets.Repositories;
 
 namespace Application.ModuleClient.Pets.Validators
 {
@@ -39,6 +39,12 @@ namespace Application.ModuleClient.Pets.Validators
 
             if (await _breedRepository.GetByIdAsync(command.BreedId) == null)
                 throw new NotFoundException("Raza");
+        }
+
+        public async Task ValidateGetByIdAsync(Guid id)
+        {
+            if (await _petRepository.GetByIdAsync(id) == null)
+                throw new NotFoundException("Mascota");
         }
     }
 }

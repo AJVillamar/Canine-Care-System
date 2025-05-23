@@ -1,5 +1,5 @@
-﻿using Domain.ModuleClient.Pets.Models;
-using Domain.ModuleClient.Pets.Builders;
+﻿using Domain.ModuleClient.Pets.Builders;
+using Domain.ModuleClient.Pets.Models;
 
 namespace Application.ModuleClient.Breeds.Commands.CreateDefaultBreeds
 {

@@ -1,1 +1,307 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-black) white;
+}
+
+/* __________  __    ____  ____  _____
+  / ____/ __ \/ /   / __ \/ __ \/ ___/
+ / /   / / / / /   / / / / /_/ /\__ \ 
+/ /___/ /_/ / /___/ /_/ / _, _/___/ / 
+\____/\____/_____/\____/_/ |_|/____/ */
+
+:root {
+    --color-primary: #cc8241;
+    --color-white: #fafafa;
+    --color-black: #1a1a1a;
+    --color-error: #cd1d1d;
+    --color-info: #0e7df4;
+    --color-success: #4caf50;
+    --color-background: #FFFFFF;
+    --color-background-dark: #F4F4F4;
+    --color-background-transparent: #ffffff29;
+}
+
+/*  __________  _   _____________
+   / ____/ __ \/ | / /_  __/ ___/
+  / /_  / / / /  |/ / / /  \__ \ 
+ / __/ / /_/ / /|  / / /  ___/ / 
+/_/    \____/_/ |_/ /_/  /____/ */
+
+@font-face {
+    font-family: 'antheroma-text';
+    src: url('/fonts/antheroma.otf');
+}
+
+.font--antheroma-text {
+    font-family: 'antheroma-text', sans-serif;
+}
+
+@font-face {
+    font-family: 'grovant-title';
+    src: url('/fonts/grovant.otf');
+}
+
+.font--grovant-title {
+    font-family: 'grovant-title', sans-serif;
+}
+
+@font-face {
+    font-family: 'rumaila-label';
+    src: url('/fonts/rumaila.otf');
+}
+
+.font--rumaila-label {
+    font-family: 'rumaila-label', sans-serif;
+}
+
+/*  _____   ______  __  ________
+   /  _/ | / / __ \/ / / /_  __/
+   / //  |/ / /_/ / / / / / /   
+ _/ // /|  / ____/ /_/ / / /    
+/___/_/ |_/_/    \____/ /_/ */
+
+.form__group {
+    width: 100%;
+    height: 70px;
+    position: relative;
+}
+
+.form__input {
+    width: 100%;
+    height: 30px;
+    padding: 0 8px;
+    padding-right: 40px;
+    font-size: 12px;
+    transition: .2s linear;
+    border: 1px solid var(--color-black);
+}
+
+.form__input::placeholder {
+    color: gray;
+    opacity: 1;
+    font-size: 11px;
+}
+
+.form__input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form__icon {
+    position: absolute;
+    right: 10px;
+    top: 7px;
+    font-size: 15px;
+    color: var(--color-black);
+    transition: color 0.2s linear;
+}
+
+.form__icon--button {
+    color: var(--color-info);
+    cursor: pointer;
+}
+
+.form__icon--eye {
+    cursor: pointer;
+}
+
+.form__input:focus~.form__icon {
+    color: var(--color-primary);
+}
+
+.form__alert {
+    color: var(--color-error);
+    font-size: xx-small;
+    float: right;
+}
+
+.form__label {
+    position: absolute;
+    left: 0px;
+    top: -22px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.ng-invalid:not(form).ng-touched {
+    border: 1px solid var(--color-error);
+}
+
+.form__input.ng-invalid.ng-touched~.form__icon {
+    color: var(--color-error);
+}
+
+/*  ____  __  __________________  _   __
+   / __ )/ / / /_  __/_  __/ __ \/ | / /
+  / __  / / / / / /   / / / / / /  |/ / 
+ / /_/ / /_/ / / /   / / / /_/ / /|  /  
+/_____/\____/ /_/   /_/  \____/_/ |_/ */
+
+.button__control {
+    width: 100%;
+    height: 30px;
+    background: transparent;
+    border: 1px solid #555;
+    color: var(--color-white);
+    outline: none;
+    cursor: pointer;
+    transition:
+        background 0.2s linear,
+        border-color 0.2s linear,
+        color 0.2s linear;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.button__control--primary {
+    background-color: var(--color-white);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.button__control--black {
+    background-color: #333;
+    border-color: var(--color-black);
+    color: white;
+}
+
+.button__control--cancel {
+    background-color: var(--color-white);
+    border-color: var(--color-error);
+    color: var(--color-error);
+}
+
+.button__control:hover {
+    background: var(--color-black);
+    border-color: var(--color-black);
+    color: white;
+}
+
+.button__control--primary:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+}
+
+.button__control--cancel:hover {
+    background-color: var(--color-error);
+    border-color: var(--color-error);
+}
+
+.button__text {
+    font-size: 13px;
+    transition: color 0.2s linear;
+    font-family: 'rumaila-label', sans-serif;
+}
+
+.button__action {
+    width: 40px;
+    height: 25px;
+    margin: 0 3px;
+    border: none;
+    padding: 2px;
+    background-color: black;
+    color: white;
+}
+
+/* ____  __________  ____  _____
+  / __ \/_  __/ __ \/ __ \/ ___/
+ / / / / / / / /_/ / / / /\__ \ 
+/ /_/ / / / / _, _/ /_/ /___/ / 
+\____/ /_/ /_/ |_|\____//____/ */
+
+.toast-title {
+    font-family: 'grovant-title', sans-serif;
+    font-weight: 100 !important;
+}
+
+.toast-message {
+    font-family: 'antheroma-text', sans-serif;
+}
+
+.mat-mdc-dialog-surface {
+    border-radius: 0px !important;
+}
+
+.container-custom {
+    padding: 15px 20px;
+    background-color: white;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow:
+        0 1px .8px rgba(0, 0, 0, 0.150),
+        0 .3px .8px rgba(0, 0, 0, 0.150);
+}
+
+.container-custom__view {
+    padding: 0;
+    border: 1px solid #9999993f;
+}
+
+.panel__header {
+    background-color: var(--color-primary);
+    height: 60px;
+    padding: 0 20px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.panel__header--title {
+    color: var(--color-white);
+    font-size: 13px;
+    font-family: 'grovant-title', sans-serif;
+    text-transform: uppercase;
+    margin: 0 !important;
+}
+
+.panel__body {
+    padding: 30px 0;
+    padding-bottom: 0;
+}
+
+.panel__footer {
+    height: 60px;
+    padding: 0 20px;
+    border-top: 1px solid #eee9e9;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.card__dismiss {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 5px;
+    top: 5px;
+    color: black;
+    border: 1px solid #eceef1;
+    background-color: transparent;
+    font-size: 1rem;
+    width: 20px;
+    height: 20px;
+    transition: .3s ease;
+}
+
+.card__dismiss--white {
+    background-color: white;
+}
+
+.card__dismiss:hover {
+    color: #fff;
+    background-color: var(--color-black);
+    border: 1px solid var(--color-black);
+}
+
+.card__dismiss--white:hover {
+    color: black;
+    background-color: whitesmoke;
+    border: 1px solid white;
+}

@@ -1,0 +1,23 @@
+.form__group--area {
+    height: 90px;
+}
+
+.form__input--area {
+    height: 50px;
+}
+
+textarea {
+    resize: none;
+}
+
+mat-cell.mat-column-title,
+mat-header-cell.mat-column-title {
+    max-width: 150px;
+    width: 100%;
+}
+
+mat-cell.mat-column-description,
+mat-header-cell.mat-column-description {
+    max-width: 325px;
+    width: 100%;
+}

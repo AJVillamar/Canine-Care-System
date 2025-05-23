@@ -1,0 +1,160 @@
+<section class="container-fluid w-100 h-100 p-0">
+    <div class="panel__header">
+        <p class="panel__header--title">Crear Profesional</p>
+    </div>
+    <section class="panel__body">
+        <form [formGroup]="form" >
+
+            <section class="row m-0 row-cols-md-2 p-3 p-md-4">
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text" 
+                            placeholder="Número de cédula o pasaporte" 
+                            class="form__input" 
+                            formControlName="identification"
+                            autocomplete="off"
+                            IdentificationOnly />
+                        <label class="form__label">Identificación:</label>
+                        <i class="form__icon fa-solid fa-fingerprint"></i>
+                        <div class="form__alerts">
+                            @if (identification.invalid && (identification.dirty || identification.touched)) {
+                                @if (identification.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                } @else if (identification.errors?.['maxlength']) {
+                                    <span class="form__alert">Excedió el máximo de caracteres</span>
+                                }
+                            }                                    
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="email" 
+                            placeholder="Dirección de correo Electrónico" 
+                            class="form__input"
+                            formControlName="email" 
+                            autocomplete="off" />
+                        <label class="form__label">Correo Electrónico:</label>
+                        <i class="form__icon fa-solid fa-envelope"></i>
+                        <div class="form__alerts">
+                            @if (email.invalid && (email.dirty || email.touched)) {
+                                @if (email.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                } @else if(email.errors?.['invalidEmail']){
+                                    <span class="form__alert">Correo no válido</span>
+                                } @else if (email.errors?.['maxlength']) {
+                                    <span class="form__alert">Excedió el máximo de caracteres</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text" 
+                            placeholder="Ingrese sus nombres" 
+                            class="form__input"
+                            formControlName="firstName" 
+                            autocomplete="off" 
+                            OnlyNames />
+                        <label class="form__label">Nombres:</label>
+                        <i class="form__icon fa-solid fa-signature"></i>
+                        <div class="form__alerts">
+                            @if (firstName.invalid && (firstName.dirty || firstName.touched)) {
+                                @if (firstName.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                } @else if (firstName.errors?.['maxlength']) {
+                                    <span class="form__alert">Excedió el máximo de caracteres</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="text" 
+                            placeholder="Ingrese sus apellidos" 
+                            class="form__input"
+                            formControlName="lastName" 
+                            autocomplete="off" />
+                        <label class="form__label">Apellidos:</label>
+                        <i class="form__icon fa-solid fa-signature"></i>
+                        <div class="form__alerts">
+                            @if (lastName.invalid && (lastName.dirty || lastName.touched)) {
+                                @if (lastName.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                } @else if (lastName.errors?.['maxlength']) {
+                                    <span class="form__alert">Excedió el máximo de caracteres</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+ 
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="date" 
+                            class="form__input pe-2" 
+                            formControlName="birthDate" />
+                        <label class="form__label">Fecha de nacimiento:</label>
+                        <div class="form__alerts">
+                            @if (birthDate.invalid && (birthDate.dirty || birthDate.touched)) {
+                                @if (birthDate.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                } @else if (birthDate.errors?.['notAnAdult']) {
+                                    <span class="form__alert">Debe ser mayor de 18 años</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form__container">
+                    <div class="form__group">
+                        <input 
+                            type="number" 
+                            placeholder="Años de experiencia" 
+                            class="form__input"
+                            formControlName="yearsOfExperience" 
+                            autocomplete="off" 
+                            YearsExperience />
+                        <label class="form__label">Experiencia:</label>
+                        <i class="form__icon fa-solid fa-suitcase"></i>
+                        <div class="form__alerts">
+                            @if (yearsOfExperience.invalid && (yearsOfExperience.dirty || yearsOfExperience.touched)) {
+                                @if (yearsOfExperience.errors?.['required']) {
+                                    <span class="form__alert">Campo obligatorio</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                
+            </section>
+        </form>
+    </section>
+
+    <div class="panel__footer">
+        <div class="button">
+            <button 
+                class="button__control button__control--black float-end"
+                type="submit" 
+                (click)="onSubmit()" >
+                @if (isSubmitting()) {
+                    <div class="spinner-border spinner-border-sm"></div>
+                } @else {
+                    <span class="button__text">Registrar</span>
+                }
+            </button>
+        </div>
+    </div>
+</section>
